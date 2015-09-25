@@ -9,6 +9,9 @@
     <module>storage-core</module>
     <module>storage-dao-api</module>
     <module>storage-dao-impl</module>
+    <module>storage-service-api</module>
+    <module>storage-service-impl</module>
+    <module>storage-utils</module>
   </modules>
   <build>
   	<plugins>

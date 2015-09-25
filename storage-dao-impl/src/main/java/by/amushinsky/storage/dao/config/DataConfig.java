@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Profile;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
@@ -19,17 +20,20 @@ import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import by.amushinsky.storage.utils.config.UtilsConfig;
+
 
 
 @Configuration
 @EnableTransactionManagement
 @EnableAspectJAutoProxy
+@Import(UtilsConfig.class)
 @ComponentScan(basePackages = {"by.amushinsky.storage.dao.*"})
 public class DataConfig 
 {	
 	@Configuration
 	@Profile("default")
-	@PropertySource("classpath:/by/amushinsky/storage/dao/config/data.properties")
+	@PropertySource("classpath:/props/data.properties")
 	static class DatabaseConfig
 	{
 		@Autowired
@@ -49,15 +53,18 @@ public class DataConfig
 	}
 	@Configuration
 	@Profile("dev")
-	@PropertySource("classpath:/by/amushinsky/storage/dao/config/test/data.properties")
+	@PropertySource("classpath:/props/test/test-data.properties")
 	static class EmbeddedDatabaseConfig
 	{
+		@Autowired
+		Environment env;
+		
 		@Bean
 		public DataSource embeddedDataSource() 
 		{
 			return new EmbeddedDatabaseBuilder().setType(EmbeddedDatabaseType.H2)
-					.addScript("by/amushinsky/storage/dao/sql/test/schema.sql")
-					.addScript("by/amushinsky/storage/dao/sql/test/data.sql")
+					.addScript(env.getProperty("test.schema"))
+					.addScript(env.getProperty("test.data"))
 					.build();
 		}		
 	}	
@@ -68,11 +75,5 @@ public class DataConfig
 		DataSourceTransactionManager txManager = new DataSourceTransactionManager();
 		txManager.setDataSource(dataSource);
 		return txManager;
-	}
-	
-	@Bean
-	public Logger logger()
-	{
-		return LogManager.getLogger();
 	}
 }

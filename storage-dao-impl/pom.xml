@@ -29,6 +29,11 @@
     </dependency>
     <dependency>
     	<groupId>by.amushinsky</groupId>
+    	<artifactId>storage-utils</artifactId>
+    	<version>0.0.1-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+    	<groupId>by.amushinsky</groupId>
     	<artifactId>storage-dao-api</artifactId>
     	<version>0.0.1-SNAPSHOT</version>
     </dependency>

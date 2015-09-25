@@ -1,4 +1,6 @@
-package by.amushinsky.storage.dao.logging;
+package by.amushinsky.storage.service.utils;
+
+import java.util.Arrays;
 
 import org.apache.logging.log4j.Logger;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -9,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 @Aspect
 @Component
-public class FabricStockDAOLogger 
+public class ServiceLogger 
 {
 	private Logger logger;
 	
@@ -19,7 +21,7 @@ public class FabricStockDAOLogger
 		this.logger = logger;
 	}
 	
-	@Around("execution(* by.amushinsky.storage.dao.api.*.get*(..))")
+	@Around("execution(* by.amushinsky.storage.service.api.*.get*(..))")
 	public Object doLogging(ProceedingJoinPoint pjp) throws Throwable
 	{
 		Object result = null;
@@ -30,11 +32,11 @@ public class FabricStockDAOLogger
 		}
 		catch(Throwable e)
 		{
-			logger.error("exception while "+pjp+"\n"+e.getStackTrace());
+			logger.error("exception "+e+" while "+pjp);
 			throw e;
 		}
 		logger.trace("end "+pjp);
 		return result;
 	}
-	
+		
 }

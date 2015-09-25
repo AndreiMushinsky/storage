@@ -1,6 +1,10 @@
 package by.amushinsky.storage.dao.impl;
 
+import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -8,6 +12,7 @@ import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.ClassPathResource;
@@ -33,11 +38,11 @@ public class FabricStockDAOImpl implements FabricStockDAO
 	public void init() throws IOException
 	{
 		TOTAL_AMOUNT_QUERY = 
-				FileUtils.readFileToString(
-						new ClassPathResource(env.getProperty("TOTAL_AMOUNT_QUERY")).getFile());
+				IOUtils.toString(
+						new ClassPathResource(env.getProperty("TOTAL_AMOUNT_QUERY")).getInputStream());
 		FABRIC_STOCKS_QUERY = 
-				FileUtils.readFileToString(
-						new ClassPathResource(env.getProperty("FABRIC_STOCKS_QUERY")).getFile());
+				IOUtils.toString(
+						new ClassPathResource(env.getProperty("FABRIC_STOCKS_QUERY")).getInputStream());
 	}
 	
 	@Autowired

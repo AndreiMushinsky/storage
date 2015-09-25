@@ -1,6 +1,7 @@
 package by.amushinsky.storage.core;
 
 import java.math.BigDecimal;
+import java.util.Collections;
 import java.util.List;
 
 public class Storage 
@@ -29,5 +30,29 @@ public class Storage
 	public void setTotalAmount(BigDecimal totalAmount) {
 		this.totalAmount = totalAmount;
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Storage other = (Storage) obj;
+		if (stocks == null) {
+			if (other.stocks != null)
+				return false;
+		} else if (!stocks.equals(other.stocks))
+			return false;
+		if (totalAmount == null) {
+			if (other.totalAmount != null)
+				return false;
+		} else if (!totalAmount.equals(other.totalAmount))
+			return false;
+		return true;
+	}
+	
+	
 	
 }
