@@ -12,6 +12,7 @@
     <module>storage-service-api</module>
     <module>storage-service-impl</module>
     <module>storage-utils</module>
+    <module>storage-mvc</module>
   </modules>
   <build>
   	<plugins>
