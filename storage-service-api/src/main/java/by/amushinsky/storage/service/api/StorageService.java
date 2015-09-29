@@ -2,7 +2,6 @@ package by.amushinsky.storage.service.api;
 
 import by.amushinsky.storage.core.Storage;
 
-public interface StorageService 
-{
+public interface StorageService {
 	Storage getStorage();
 }

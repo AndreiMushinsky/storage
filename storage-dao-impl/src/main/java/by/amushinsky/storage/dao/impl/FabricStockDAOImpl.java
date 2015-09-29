@@ -1,17 +1,12 @@
 package by.amushinsky.storage.dao.impl;
 
-import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -24,49 +19,40 @@ import by.amushinsky.storage.dao.api.FabricStockDAO;
 import by.amushinsky.storage.core.FabricStock;
 
 @Repository
-public class FabricStockDAOImpl implements FabricStockDAO
-{
-	private String TOTAL_AMOUNT_QUERY;
-	private String FABRIC_STOCKS_QUERY;
-	
+public class FabricStockDAOImpl implements FabricStockDAO {
+	private String totalAmountQuery;
+	private String fabricStocksQuery;
+
 	private JdbcTemplate jdbcTemplate;
-	
+
 	@Autowired
 	Environment env;
-	
+
 	@PostConstruct
-	public void init() throws IOException
-	{
-		TOTAL_AMOUNT_QUERY = 
-				IOUtils.toString(
-						new ClassPathResource(env.getProperty("TOTAL_AMOUNT_QUERY")).getInputStream());
-		FABRIC_STOCKS_QUERY = 
-				IOUtils.toString(
-						new ClassPathResource(env.getProperty("FABRIC_STOCKS_QUERY")).getInputStream());
+	public void init() throws IOException {
+		totalAmountQuery = IOUtils
+				.toString(new ClassPathResource(env.getProperty("totalAmountQuery")).getInputStream());
+		fabricStocksQuery = IOUtils
+				.toString(new ClassPathResource(env.getProperty("fabricStocksQuery")).getInputStream());
 	}
-	
+
 	@Autowired
-	public void setJdbcTemplate(DataSource dataSource)
-	{
-		this.jdbcTemplate =  new JdbcTemplate(dataSource);
-	} 
-	
-	@Override
-	@Transactional(readOnly = true)
-	public List<FabricStock> getStocks() 
-	{
-		return jdbcTemplate.query(
-				FABRIC_STOCKS_QUERY,
-				(rs, rowNum) -> new FabricStock(rs.getString("name"), rs.getBigDecimal("balance"))
-				);
-		
+	public void setJdbcTemplate(DataSource dataSource) {
+		this.jdbcTemplate = new JdbcTemplate(dataSource);
 	}
 
 	@Override
 	@Transactional(readOnly = true)
-	public BigDecimal getTotalAmount() 
-	{
-		return jdbcTemplate.queryForObject(TOTAL_AMOUNT_QUERY, BigDecimal.class);
+	public List<FabricStock> getStocks() {
+		return jdbcTemplate.query(fabricStocksQuery,
+				(rs, rowNum) -> new FabricStock(rs.getString("name"), rs.getBigDecimal("balance")));
+
 	}
-	
+
+	@Override
+	@Transactional(readOnly = true)
+	public BigDecimal getTotalAmount() {
+		return jdbcTemplate.queryForObject(totalAmountQuery, BigDecimal.class);
+	}
+
 }

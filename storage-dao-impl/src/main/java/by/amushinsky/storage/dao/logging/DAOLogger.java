@@ -9,32 +9,26 @@ import org.springframework.stereotype.Component;
 
 @Aspect
 @Component
-public class DAOLogger 
-{
+public class DAOLogger {
 	private Logger logger;
-	
+
 	@Autowired
-	public void setLogger(Logger logger)
-	{
+	public void setLogger(Logger logger) {
 		this.logger = logger;
 	}
-	
+
 	@Around("execution(* by.amushinsky.storage.dao.api.*.get*(..))")
-	public Object doLogging(ProceedingJoinPoint pjp) throws Throwable
-	{
+	public Object doLogging(ProceedingJoinPoint joinPoint) throws Throwable {
 		Object result = null;
-		logger.trace("start "+pjp);
-		try
-		{
-			result = pjp.proceed();
+		logger.trace("start " + joinPoint);
+		try {
+			result = joinPoint.proceed();
+		} catch (Throwable exception) {
+			logger.error("exception while " + joinPoint + "\n" + exception);
+			throw exception;
 		}
-		catch(Throwable e)
-		{
-			logger.error("exception while "+pjp+"\n"+e.getStackTrace());
-			throw e;
-		}
-		logger.trace("end "+pjp);
+		logger.trace("end " + joinPoint);
 		return result;
 	}
-	
+
 }

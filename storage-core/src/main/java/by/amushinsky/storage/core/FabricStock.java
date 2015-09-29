@@ -2,11 +2,10 @@ package by.amushinsky.storage.core;
 
 import java.math.BigDecimal;
 
-public class FabricStock 
-{
+public class FabricStock {
 	private String name;
 	private BigDecimal amount;
-	
+
 	public FabricStock(String name, BigDecimal amount) {
 		super();
 		this.name = name;
@@ -51,6 +50,4 @@ public class FabricStock
 		return true;
 	}
 
-	
-	
 }

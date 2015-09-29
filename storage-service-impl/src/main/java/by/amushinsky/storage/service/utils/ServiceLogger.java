@@ -1,7 +1,5 @@
 package by.amushinsky.storage.service.utils;
 
-import java.util.Arrays;
-
 import org.apache.logging.log4j.Logger;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -11,32 +9,26 @@ import org.springframework.stereotype.Component;
 
 @Aspect
 @Component
-public class ServiceLogger 
-{
+public class ServiceLogger {
 	private Logger logger;
-	
+
 	@Autowired
-	public void setLogger(Logger logger)
-	{
+	public void setLogger(Logger logger) {
 		this.logger = logger;
 	}
-	
+
 	@Around("execution(* by.amushinsky.storage.service.api.*.get*(..))")
-	public Object doLogging(ProceedingJoinPoint pjp) throws Throwable
-	{
+	public Object doLogging(ProceedingJoinPoint joinPoint) throws Throwable {
 		Object result = null;
-		logger.trace("start "+pjp);
-		try
-		{
-			result = pjp.proceed();
+		logger.trace("start " + joinPoint);
+		try {
+			result = joinPoint.proceed();
+		} catch (Throwable exception) {
+			logger.error("exception " + exception + " while " + joinPoint);
+			throw exception;
 		}
-		catch(Throwable e)
-		{
-			logger.error("exception "+e+" while "+pjp);
-			throw e;
-		}
-		logger.trace("end "+pjp);
+		logger.trace("end " + joinPoint);
 		return result;
 	}
-		
+
 }

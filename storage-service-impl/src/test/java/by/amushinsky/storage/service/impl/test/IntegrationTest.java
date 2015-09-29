@@ -19,18 +19,16 @@ import by.amushinsky.storage.service.api.StorageService;
 import by.amushinsky.storage.service.config.ServiceConfig;
 
 @ActiveProfiles("dev")
-@ContextConfiguration(classes=ServiceConfig.class)
+@ContextConfiguration(classes = ServiceConfig.class)
 @RunWith(SpringJUnit4ClassRunner.class)
-public class IntegrationTest 
-{
+public class IntegrationTest {
 	@Autowired
 	private StorageService storageService;
-	
+
 	private static Storage expectedStorage;
 
 	@BeforeClass
-	public static void init()
-	{
+	public static void init() {
 		List<FabricStock> expectedStocks = new ArrayList<>();
 		expectedStocks.add(new FabricStock("linen 100%", new BigDecimal("500.00")));
 		expectedStocks.add(new FabricStock("cotton 100%", new BigDecimal("460.10")));
@@ -38,16 +36,14 @@ public class IntegrationTest
 		expectedStocks.add(new FabricStock("PE 100%", new BigDecimal("799.50")));
 		expectedStorage = new Storage(expectedStocks, new BigDecimal("2960.10"));
 	}
-	
+
 	@Test
-	public void testContext()
-	{
+	public void testContext() {
 		Assert.assertNotNull(storageService);
 	}
-	
+
 	@Test
-	public void testGetStorage()
-	{
+	public void testGetStorage() {
 		Assert.assertEquals(expectedStorage, storageService.getStorage());
 	}
 }

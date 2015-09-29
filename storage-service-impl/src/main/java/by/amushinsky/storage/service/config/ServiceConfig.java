@@ -8,6 +8,7 @@ import by.amushinsky.storage.dao.config.DataConfig;
 import by.amushinsky.storage.utils.config.UtilsConfig;
 
 @Configuration
-@Import({DataConfig.class, UtilsConfig.class})
-@ComponentScan(basePackages={"by.amushinsky.storage.service.*"})
-public class ServiceConfig {}
+@Import({ DataConfig.class, UtilsConfig.class })
+@ComponentScan(basePackages = { "by.amushinsky.storage.service.*" })
+public class ServiceConfig {
+}

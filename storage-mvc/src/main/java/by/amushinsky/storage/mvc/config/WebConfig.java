@@ -8,26 +8,24 @@ import org.springframework.web.servlet.config.annotation.DefaultServletHandlerCo
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
+import org.springframework.web.servlet.view.JstlView;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = {"by.amushinsky.storage.mvc.*"})
-public class WebConfig extends WebMvcConfigurerAdapter 
-{
+@ComponentScan(basePackages = { "by.amushinsky.storage.mvc.*" })
+public class WebConfig extends WebMvcConfigurerAdapter {
 	@Bean
-	public ViewResolver viewResolver()
-	{
+	public ViewResolver viewResolver() {
 		InternalResourceViewResolver resolver = new InternalResourceViewResolver();
-		resolver.setPrefix("/WEB-INF/views/jsp/");
+		resolver.setPrefix("/WEB-INF/views/");
 		resolver.setSuffix(".jsp");
 		resolver.setExposeContextBeansAsAttributes(true);
 		return resolver;
 	}
-	
+
 	@Override
-	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer)
-	{
+	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
 		configurer.enable();
 	}
-	
+
 }

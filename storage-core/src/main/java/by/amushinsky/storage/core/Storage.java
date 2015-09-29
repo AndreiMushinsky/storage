@@ -1,14 +1,12 @@
 package by.amushinsky.storage.core;
 
 import java.math.BigDecimal;
-import java.util.Collections;
 import java.util.List;
 
-public class Storage 
-{
+public class Storage {
 	private List<FabricStock> stocks;
 	private BigDecimal totalAmount;
-	
+
 	public Storage(List<FabricStock> stocks, BigDecimal totalAmount) {
 		super();
 		this.stocks = stocks;
@@ -52,7 +50,5 @@ public class Storage
 			return false;
 		return true;
 	}
-	
-	
-	
+
 }
