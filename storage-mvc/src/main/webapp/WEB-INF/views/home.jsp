@@ -10,7 +10,7 @@
 		<ul>
 			<li><a href="<c:url value="/storage" />">Склад</a></li>
 			<li><a href="<c:url value="/journal" />">Журнал учета</a></li>
-			<li><a href="<c:url value="/movement" />">Оборотно-сальдовая ведомость</a></li>
+			<li><a href="<c:url value="/trial" />">Оборотно-сальдовая ведомость</a></li>
 		</ul>
 	</body>
 </html>
