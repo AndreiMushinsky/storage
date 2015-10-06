@@ -22,6 +22,7 @@ import by.amushinsky.storage.core.FabricStock;
 public class FabricStockDAOImpl implements FabricStockDAO {
 	private String totalAmountQuery;
 	private String fabricStocksQuery;
+	private String amountByIdQuery;
 
 	private JdbcTemplate jdbcTemplate;
 
@@ -34,6 +35,8 @@ public class FabricStockDAOImpl implements FabricStockDAO {
 				.toString(new ClassPathResource(env.getProperty("totalAmountQuery")).getInputStream());
 		fabricStocksQuery = IOUtils
 				.toString(new ClassPathResource(env.getProperty("fabricStocksQuery")).getInputStream());
+		amountByIdQuery = IOUtils
+				.toString(new ClassPathResource(env.getProperty("amountByIdQuery")).getInputStream());
 	}
 
 	@Autowired
@@ -46,13 +49,18 @@ public class FabricStockDAOImpl implements FabricStockDAO {
 	public List<FabricStock> getStocks() {
 		return jdbcTemplate.query(fabricStocksQuery,
 				(rs, rowNum) -> new FabricStock(rs.getString("name"), rs.getBigDecimal("balance")));
-
 	}
 
 	@Override
 	@Transactional(readOnly = true)
 	public BigDecimal getTotalAmount() {
 		return jdbcTemplate.queryForObject(totalAmountQuery, BigDecimal.class);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public BigDecimal getAmountById(int id) {
+		return jdbcTemplate.queryForObject(amountByIdQuery, BigDecimal.class, id, id);
 	}
 
 }

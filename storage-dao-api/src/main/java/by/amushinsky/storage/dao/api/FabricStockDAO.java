@@ -9,4 +9,6 @@ public interface FabricStockDAO {
 	List<FabricStock> getStocks();
 
 	BigDecimal getTotalAmount();
+	
+	BigDecimal getAmountById(int id);
 }

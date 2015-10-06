@@ -1,9 +1,9 @@
 package by.amushinsky.storage.mvc.controller.test;
 
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -11,6 +11,8 @@ import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.*;
@@ -23,6 +25,8 @@ import by.amushinsky.storage.core.TrialBalance;
 import by.amushinsky.storage.mvc.controller.TrialBalanceController;
 import by.amushinsky.storage.service.api.TrialBalanceService;
 
+
+
 public class TrialBalanceControllerTest {
 	@Test
 	public void testGetTrialBalance() throws Exception {
@@ -30,22 +34,21 @@ public class TrialBalanceControllerTest {
 				new GregorianCalendar(2015, Calendar.APRIL, 1));
 		TrialBalance trialBalance = createTrialBalance(timePeriod);
 		TrialBalanceService service = Mockito.mock(TrialBalanceService.class);
-		Mockito.when(service.getTrialBalance(timePeriod)).thenReturn(trialBalance);
 		Mockito.when(service.getTrialBalance(Mockito.any(TimePeriod.class))).thenReturn(trialBalance);
 
 		TrialBalanceController controller = new TrialBalanceController();
 		controller.setTrialBalanceService(service);
-
+		System.out.println(timePeriod);
 		MockMvc mockMvc = standaloneSetup(controller)
 				.setSingleView(new InternalResourceView("/WEB_INF/views/trial.jsp")).build();
 		mockMvc.perform(get("/trial")).andExpect(view().name("trial"))
 				.andExpect(model().attributeExists("trialBalance", "timePeriod"))
-				.andExpect(model().attribute("trialBalance", CoreMatchers.equalTo(trialBalance)));
+				.andExpect(model().attribute("trialBalance", trialBalance));
 		mockMvc.perform(post("/trial").requestAttr("timePeriod", timePeriod))
 				.andExpect(view().name("trial"))
 				.andExpect(model().attributeExists("trialBalance", "timePeriod"))
-				.andExpect(model().attribute("timePeriod", CoreMatchers.equalTo(timePeriod)))
-				.andExpect(model().attribute("trialBalance", CoreMatchers.equalTo(trialBalance)));
+				.andExpect(model().attribute("timePeriod", timePeriod))
+				.andExpect(model().attribute("trialBalance", trialBalance));
 	}
 
 	public TrialBalance createTrialBalance(TimePeriod timePeriod) {

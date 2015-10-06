@@ -19,9 +19,9 @@
 </head>
 <body>
 	<sf:form method="POST" commandName="timePeriod" onsubmit="return checkTimePeriod(this);">
-	Период с:<sf:input path="fromDate" class="date" />
-	по:<sf:input path="toDate" class="date" />
-	<input type="submit" value="Показать"/>
+	Период с:<sf:input path="fromDate" class="date" readonly="true"/>
+	по:<sf:input path="toDate" class="date" readonly="true" />
+	<input type="submit" value="Показать" />
 	<span id="errorMessage"></span>
 	</sf:form>
 	<table id="trialTable">
