@@ -1,6 +1,7 @@
 package by.amushinsky.storage.dao.impl;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
@@ -19,6 +20,7 @@ import by.amushinsky.storage.dao.api.FabricDAO;
 @Repository
 public class FabricDAOImpl implements FabricDAO {
 	private String createFabricQuery;
+	private String getFabricsQuery;
 	
 	private JdbcTemplate jdbcTemplate;
 
@@ -29,6 +31,8 @@ public class FabricDAOImpl implements FabricDAO {
 	public void init() throws IOException {
 		createFabricQuery = IOUtils
 				.toString(new ClassPathResource(env.getProperty("createFabricQuery")).getInputStream());
+		getFabricsQuery = IOUtils
+				.toString(new ClassPathResource(env.getProperty("getFabricsQuery")).getInputStream());
 	}
 	
 	@Autowired
@@ -40,6 +44,11 @@ public class FabricDAOImpl implements FabricDAO {
 	@Transactional(readOnly = false)
 	public void create(Fabric fabric) {
 		jdbcTemplate.update(createFabricQuery, fabric.getName());
+	}
+
+	@Override
+	public List<Fabric> getFabrics() {
+		return jdbcTemplate.query(getFabricsQuery, (rs, rowNum) -> new Fabric(rs.getInt("id"), rs.getString("name")));
 	}
 
 }

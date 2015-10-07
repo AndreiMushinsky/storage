@@ -49,8 +49,8 @@ public class TrialBalanceDAOImpl implements TrialBalanceDAO {
 				(rs, rowNum) -> new FabricMovement(rs.getString("name"), rs.getBigDecimal("start_balance"),
 						rs.getBigDecimal("dr_movement"), rs.getBigDecimal("cr_movement"),
 						rs.getBigDecimal("end_balance")),
-				timePeriod.getFromDate(), timePeriod.getFromDate(), timePeriod.getFromDate(), 
-				timePeriod.getToDate(), timePeriod.getFromDate(), timePeriod.getToDate());
+				timePeriod.getFromDate(), timePeriod.getFromDate(), timePeriod.getFromDate(), timePeriod.getToDate(),
+				timePeriod.getFromDate(), timePeriod.getToDate());
 	}
 
 	@Override
@@ -59,9 +59,8 @@ public class TrialBalanceDAOImpl implements TrialBalanceDAO {
 		return jdbcTemplate.queryForObject(totalMovementQuery,
 				(rs, rowNum) -> new TotalMovement(rs.getBigDecimal("start_balance"), rs.getBigDecimal("dr_movement"),
 						rs.getBigDecimal("cr_movement"), rs.getBigDecimal("end_balance")),
-				timePeriod.getFromDate(), timePeriod.getFromDate(), timePeriod.getFromDate(), 
-				timePeriod.getToDate(), timePeriod.getFromDate(), timePeriod.getToDate(), timePeriod.getToDate(), 
-				timePeriod.getToDate());
+				timePeriod.getFromDate(), timePeriod.getFromDate(), timePeriod.getFromDate(), timePeriod.getToDate(),
+				timePeriod.getFromDate(), timePeriod.getToDate(), timePeriod.getToDate(), timePeriod.getToDate());
 
 	}
 

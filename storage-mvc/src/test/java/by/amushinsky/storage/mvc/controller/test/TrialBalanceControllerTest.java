@@ -7,48 +7,76 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-import org.hamcrest.CoreMatchers;
+import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mockito;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.springframework.test.web.servlet.setup.MockMvcBuilders.*;
-import org.springframework.web.servlet.view.InternalResourceView;
+
+import org.springframework.web.context.WebApplicationContext;
 
 import by.amushinsky.storage.core.FabricMovement;
 import by.amushinsky.storage.core.TimePeriod;
 import by.amushinsky.storage.core.TotalMovement;
 import by.amushinsky.storage.core.TrialBalance;
-import by.amushinsky.storage.mvc.controller.TrialBalanceController;
+import by.amushinsky.storage.mvc.config.WebConfig;
+import by.amushinsky.storage.service.api.TimePeriodService;
 import by.amushinsky.storage.service.api.TrialBalanceService;
+import by.amushinsky.storage.service.config.ServiceConfig;
 
 
-
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = {WebConfig.class, ServiceConfig.class})
+@Profile("dev")
+@WebAppConfiguration
 public class TrialBalanceControllerTest {
+	
+	@Autowired
+    private WebApplicationContext context;
+	
+	@Autowired
+	private TrialBalanceService trialBalanceService;
+	
+	@Autowired
+	private TimePeriodService timePeriodService;
+	
+    private MockMvc mockMvc;
+    private TrialBalance defaultTrialBalance;
+    private TimePeriod defaultTimePeriod;
+    private TimePeriod timePeriod;
+    private TrialBalance trialBalance;
+    
+    @Before
+    public void setUp() throws Exception {
+    	defaultTimePeriod = timePeriodService.defaultTimePeriod();
+		defaultTrialBalance = trialBalanceService.getTrialBalance(defaultTimePeriod);
+		timePeriod = new TimePeriod(new GregorianCalendar(2015, Calendar.SEPTEMBER, 7).getTime(), 
+				new GregorianCalendar(2015, Calendar.SEPTEMBER, 14).getTime());
+		trialBalance = createTrialBalance(timePeriod);
+        mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
+    }
+	
+	
 	@Test
 	public void testGetTrialBalance() throws Exception {
-		TimePeriod timePeriod = new TimePeriod(new GregorianCalendar(2015, Calendar.APRIL, 1), 
-				new GregorianCalendar(2015, Calendar.APRIL, 1));
-		TrialBalance trialBalance = createTrialBalance(timePeriod);
-		TrialBalanceService service = Mockito.mock(TrialBalanceService.class);
-		Mockito.when(service.getTrialBalance(Mockito.any(TimePeriod.class))).thenReturn(trialBalance);
-
-		TrialBalanceController controller = new TrialBalanceController();
-		controller.setTrialBalanceService(service);
-		System.out.println(timePeriod);
-		MockMvc mockMvc = standaloneSetup(controller)
-				.setSingleView(new InternalResourceView("/WEB_INF/views/trial.jsp")).build();
+		
 		mockMvc.perform(get("/trial")).andExpect(view().name("trial"))
 				.andExpect(model().attributeExists("trialBalance", "timePeriod"))
-				.andExpect(model().attribute("trialBalance", trialBalance));
-		mockMvc.perform(post("/trial").requestAttr("timePeriod", timePeriod))
+				.andExpect(model().attribute("timePeriod", defaultTimePeriod))
+				.andExpect(model().attribute("trialBalance", defaultTrialBalance));
+		mockMvc.perform(post("/trial").param("fromDate", "07.09.2015").param("toDate", "14.09.2015"))
 				.andExpect(view().name("trial"))
 				.andExpect(model().attributeExists("trialBalance", "timePeriod"))
-				.andExpect(model().attribute("timePeriod", timePeriod))
-				.andExpect(model().attribute("trialBalance", trialBalance));
+				.andExpect(model().attribute("timePeriod", timePeriod));
 	}
 
 	public TrialBalance createTrialBalance(TimePeriod timePeriod) {
@@ -63,6 +91,7 @@ public class TrialBalanceControllerTest {
 				new BigDecimal("500.00"), new BigDecimal("500.00")));
 		expectedMovements.add(new FabricMovement("PE 100%", new BigDecimal("0.00"), new BigDecimal("2300.00"),
 				new BigDecimal("0.00"), new BigDecimal("2300.00")));
+		expectedMovements.sort( (x, y) -> x.getName().compareTo(y.getName()) );
 		return new TrialBalance(expectedMovements, expectedTotalMovement, timePeriod);
 	}
 }

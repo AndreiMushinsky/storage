@@ -1,6 +1,7 @@
 package by.amushinsky.storage.dao.impl.test;
 
 import java.util.List;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -42,7 +43,6 @@ public class TestTrialBalanceDAOImpl {
 	@Test
 	public void testGetMovements() {
 		List<FabricMovement> actualMovements = trialBalanceDAO.getMovements(ETALON_TIMEPERIOD);
-		for (int i = 0; i < actualMovements.size(); i++)
-			Assert.assertTrue(ETALON_MOVEMENTS.contains(actualMovements.get(i)));
+		Assert.assertTrue(ETALON_MOVEMENTS.containsAll(actualMovements) && actualMovements.containsAll(ETALON_MOVEMENTS));
 	}
 }

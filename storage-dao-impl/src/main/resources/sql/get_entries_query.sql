@@ -1,0 +1,1 @@
+SELECT * FROM Journal WHERE date BETWEEN ? AND ? ORDER BY date ASC

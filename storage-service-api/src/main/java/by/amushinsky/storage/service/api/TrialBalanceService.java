@@ -5,4 +5,5 @@ import by.amushinsky.storage.core.TrialBalance;
 
 public interface TrialBalanceService {
 	TrialBalance getTrialBalance(TimePeriod timePeriod);
+
 }

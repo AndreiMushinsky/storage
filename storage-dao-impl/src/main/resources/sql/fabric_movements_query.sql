@@ -14,4 +14,4 @@ SELECT name, start_balance, dr_movement, cr_movement, start_balance+dr_movement-
 	LEFT JOIN 
 		(SELECT fabric_id, SUM(amount) AS cr FROM Journal WHERE is_dr=0 AND date BETWEEN ? AND ? GROUP BY fabric_id) AS T7 
 	ON id = fabric_id) 
-AS T8, Fabrics WHERE T8.id = Fabrics.id;
+AS T8, Fabrics WHERE T8.id = Fabrics.id ORDER BY name ASC;

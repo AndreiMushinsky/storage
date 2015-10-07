@@ -1,0 +1,1 @@
+SELECT * FROM Fabrics ORDER BY name ASC
