@@ -1,0 +1,1 @@
+UPDATE Journal SET date=:date, fabric_id=:fabricId, is_dr=:isDr, amount=:amount WHERE id=:id

@@ -3,96 +3,107 @@ package by.amushinsky.storage.core;
 import java.math.BigDecimal;
 
 public class FabricMovement {
-	private String name;
-	private BigDecimal startBalance;
-	private BigDecimal drMovement;
-	private BigDecimal crMovement;
-	private BigDecimal endBalance;
 
-	public FabricMovement(String name, BigDecimal startBalance, BigDecimal drMovement, BigDecimal crMovement,
-			BigDecimal endBalance) {
-		this.name = name;
-		this.startBalance = startBalance;
-		this.drMovement = drMovement;
-		this.crMovement = crMovement;
-		this.endBalance = endBalance;
-	}
+    private String name;
 
-	public String getName() {
-		return name;
-	}
+    private BigDecimal start;
 
-	public BigDecimal getStartBalance() {
-		return startBalance;
-	}
+    private BigDecimal debit;
 
-	public BigDecimal getDrMovement() {
-		return drMovement;
-	}
+    private BigDecimal credit;
 
-	public BigDecimal getCrMovement() {
-		return crMovement;
-	}
+    private BigDecimal end;
 
-	public BigDecimal getEndBalance() {
-		return endBalance;
-	}
+    public FabricMovement(String name, BigDecimal start, BigDecimal debit,
+            BigDecimal credit, BigDecimal end) {
+        this.name = name;
+        this.start = start;
+        this.debit = debit;
+        this.credit = credit;
+        this.end = end;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setStartBalance(BigDecimal startBalance) {
-		this.startBalance = startBalance;
-	}
+    public BigDecimal getStart() {
+        return start;
+    }
 
-	public void setDrMovement(BigDecimal drMovement) {
-		this.drMovement = drMovement;
-	}
+    public BigDecimal getDebit() {
+        return debit;
+    }
 
-	public void setCrMovement(BigDecimal crMovement) {
-		this.crMovement = crMovement;
-	}
+    public BigDecimal getCredit() {
+        return credit;
+    }
 
-	public void setEndBalance(BigDecimal endBalance) {
-		this.endBalance = endBalance;
-	}
+    public BigDecimal getEnd() {
+        return end;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		FabricMovement other = (FabricMovement) obj;
-		if (crMovement == null) {
-			if (other.crMovement != null)
-				return false;
-		} else if (!crMovement.equals(other.crMovement))
-			return false;
-		if (drMovement == null) {
-			if (other.drMovement != null)
-				return false;
-		} else if (!drMovement.equals(other.drMovement))
-			return false;
-		if (endBalance == null) {
-			if (other.endBalance != null)
-				return false;
-		} else if (!endBalance.equals(other.endBalance))
-			return false;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
-		if (startBalance == null) {
-			if (other.startBalance != null)
-				return false;
-		} else if (!startBalance.equals(other.startBalance))
-			return false;
-		return true;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setStart(BigDecimal start) {
+        this.start = start;
+    }
+
+    public void setDebit(BigDecimal debit) {
+        this.debit = debit;
+    }
+
+    public void setCredit(BigDecimal credit) {
+        this.credit = credit;
+    }
+
+    public void setEnd(BigDecimal end) {
+        this.end = end;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        FabricMovement other = (FabricMovement) obj;
+        if (credit == null) {
+            if (other.credit != null)
+                return false;
+        } else if (credit.compareTo(other.credit) != 0)
+            return false;
+        if (debit == null) {
+            if (other.debit != null)
+                return false;
+        } else if (debit.compareTo(other.debit) != 0)
+            return false;
+        if (end == null) {
+            if (other.end != null)
+                return false;
+        } else if (end.compareTo(other.end) != 0)
+            return false;
+        if (name == null) {
+            if (other.name != null)
+                return false;
+        } else if (!name.equals(other.name))
+            return false;
+        if (start == null) {
+            if (other.start != null)
+                return false;
+        } else if (start.compareTo(other.start) != 0)
+            return false;
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "FabricMovement [name=" + name + ", start" + start + ", debit="
+                + debit + ", credit=" + credit + ", end=" + end + "]";
+    }
 
 }

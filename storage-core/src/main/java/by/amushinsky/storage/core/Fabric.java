@@ -1,57 +1,72 @@
 package by.amushinsky.storage.core;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 public class Fabric {
-	private int id;
-	private String name;
 
-	public Fabric() {
-		super();
-	}
+    public static final int NAME_MIN_LENGTH = 3;
+    
+    public static final int NAME_MAX_LENGTH = 30;
 
-	public Fabric(String name) {
-		super();
-		this.name = name;
-	}
+    private int id;
 
-	public Fabric(int id, String name) {
-		super();
-		this.id = id;
-		this.name = name;
-	}
+    @NotNull
+    @Size(min = NAME_MIN_LENGTH, max = NAME_MAX_LENGTH)
+    private String name;
 
-	public int getId() {
-		return id;
-	}
+    public Fabric() {}
 
-	public String getName() {
-		return name;
-	}
+    public Fabric(String name) {
+        this.name = name;
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public Fabric(int id, String name) {
+        this(name);
+        this.id = id;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public int getId() {
+        return id;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Fabric other = (Fabric) obj;
-		if (id != other.id)
-			return false;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
-		return true;
-	}
+    public String getName() {
+        return name;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        Fabric other = (Fabric) obj;
+        if (id != other.id) {
+            return false;
+        }
+        if (name == null) {
+            if (other.name != null) {
+                return false;
+            }
+        } else if (!name.equals(other.name)) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Fabric [id=" + id + ", name=" + name + "]";
+    }
 
 }

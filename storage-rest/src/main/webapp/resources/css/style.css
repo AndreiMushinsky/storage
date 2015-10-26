@@ -1,0 +1,91 @@
+@CHARSET "UTF-8";
+
+th, td {
+	border: 2px solid green;
+}
+
+th {
+    text-align: center;
+    background-color: green;
+    color: white;
+    height: 25px;
+    width: 200px;
+    vertical-align: center;
+    padding: 5px;
+}
+
+td {
+	padding: 5px;
+    height: 30px;
+    width: 200px;
+    vertical-align: center;
+}
+
+.count{
+	text-align: right;
+}
+
+#total{
+    background-color: green;
+    color: white;
+    font-weight: bold;
+}
+
+.index{
+	width: 30px;
+}
+
+#entries tr:hover:not(#selectedRow) {
+	background-color: #c7ebc4;
+}
+
+#selectedRow {
+	background-color: #d3d7cf;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+.button{
+	width: 30px;
+	height: 30px;
+	margin-right: 10px;
+	margin-left: 10px;
+	margin-top: 2px;
+	margin-bottom: 2px;
+}
+
+.button:hover{
+	margin-right: 8px;
+	margin-left: 8px;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	width: 34px;
+	height: 34px;
+}
+
+.control{
+	vertical-align: center;
+}
+
+.error-field{
+	border-color: red;
+	border-style: solid;
+	border-width: 2px;
+	color: red;
+}
+
+.error-message{
+	color: red;
+	font-style: italic;
+}
+
+#form-table, #form-table tr, #form-table tr td{
+	border-width: 0px;
+	width: auto;
+}
+
+#spinner{
+	height: 15px;
+} 

@@ -6,21 +6,18 @@
 	<parent>
 		<groupId>by.amushinsky</groupId>
 		<artifactId>storage</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>1.0</version>
 	</parent>
-	<groupId>by.amushinsky</groupId>
+	
+	
 	<artifactId>storage-service-api</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
 	<name>storage-service-api</name>
-	<url>http://maven.apache.org</url>
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-	</properties>
+	
 	<dependencies>
 		<dependency>
 			<groupId>by.amushinsky</groupId>
 			<artifactId>storage-core</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
+	
 </project>

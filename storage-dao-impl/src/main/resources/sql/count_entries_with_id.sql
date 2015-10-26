@@ -1,0 +1,1 @@
+SELECT COUNT(*) FROM Journal WHERE id = :id

@@ -1,0 +1,1 @@
+SELECT COUNT(*) FROM Fabrics WHERE name = :name

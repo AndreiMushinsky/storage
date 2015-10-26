@@ -1,0 +1,1 @@
+INSERT INTO Journal (date, fabric_id, is_dr, amount) VALUES (:date, :fabricId, :isDr, :amount) 

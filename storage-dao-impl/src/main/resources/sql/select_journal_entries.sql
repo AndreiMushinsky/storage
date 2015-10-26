@@ -1,0 +1,1 @@
+SELECT * FROM Journal WHERE date BETWEEN :fromDate AND :toDate ORDER BY date ASC

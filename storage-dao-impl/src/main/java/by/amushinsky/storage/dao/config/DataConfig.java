@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
-import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Profile;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
@@ -17,14 +16,12 @@ import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import by.amushinsky.storage.utils.config.UtilsConfig;
-
 @Configuration
 @EnableTransactionManagement
 @EnableAspectJAutoProxy
-@Import(UtilsConfig.class)
 @ComponentScan(basePackages = { "by.amushinsky.storage.dao.*" })
 public class DataConfig {
+
 	@Configuration
 	@Profile("default")
 	@PropertySource("classpath:/props/data.properties")
@@ -39,6 +36,7 @@ public class DataConfig {
 			dataSource.setUrl(env.getProperty("database.url"));
 			dataSource.setUsername(env.getProperty("database.user"));
 			dataSource.setPassword(env.getProperty("database.password"));
+
 			return dataSource;
 		}
 
@@ -46,7 +44,7 @@ public class DataConfig {
 
 	@Configuration
 	@Profile("dev")
-	@PropertySource("classpath:/props/test/test-data.properties")
+	@PropertySource("classpath:/test.properties")
 	static class EmbeddedDatabaseConfig {
 		@Autowired
 		Environment env;
@@ -54,7 +52,7 @@ public class DataConfig {
 		@Bean
 		public DataSource embeddedDataSource() {
 			return new EmbeddedDatabaseBuilder().setType(EmbeddedDatabaseType.H2)
-					.addScript(env.getProperty("test.schema")).addScript(env.getProperty("test.data")).build();
+					.addScript(env.getProperty("test.schema")).build();
 		}
 	}
 

@@ -1,0 +1,1 @@
+INSERT INTO Fabrics (name) VALUES (:name)

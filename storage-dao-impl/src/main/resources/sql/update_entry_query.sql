@@ -1,1 +1,0 @@
-UPDATE Journal SET date=?, fabric_id=?, is_dr=?, amount=? WHERE id=?
